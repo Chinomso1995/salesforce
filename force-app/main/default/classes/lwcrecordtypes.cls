@@ -14,7 +14,8 @@ public with sharing class lwcrecordtypes {
                      SearchQueryResponse responsePerContact = new SearchQueryResponse();
                      responsePerContact.recordId = c.Id;
                      responsePerContact.recordName = c.Name;
-                     responsePerContact.recordSobjectType = 'Contact';
+                     responsePerContact.recordSobjectType = 'Contact'; 
+                     responsePerContact.recordUrl = URL.getOrgDomainUrl().toExternalForm() + '/lightning' + '/r' + '/Contact/' +c.Id + '/view';
                      auraResponse.add(responsePerContact);
                  }
              }
@@ -27,6 +28,7 @@ public with sharing class lwcrecordtypes {
                         responsePerAccount.recordId = a.Id;
                         responsePerAccount.recordName = a.Name;
                         responsePerAccount.recordSobjectType = 'Account';
+                        responsePerAccount.recordUrl = Url.getOrgDomainUrl().toExternalForm() + '/lightning' + '/r' + '/Account/' +a.Id + '/view';
                         auraResponse.add(responsePerAccount);
                     }
                 }
@@ -39,5 +41,6 @@ public with sharing class lwcrecordtypes {
         public string recordId {get; set;}
         public string recordName {get; set;}
         public string recordSobjectType{get; set;}
+        public string recordUrl {get; set;}
     }
 }
