@@ -11,11 +11,9 @@ export default class Searchcontacts extends LightningElement {
      @track dataNotFound;
      @wire (retrieveContactData,{keySearch:'$currentRecordName'})
      wireRecord({data,error}){
-         if(data){ 
-             const contact = data[0];
-             const account = data[1];          
-             this.records = contact.concat(account);
-             console.log(contact.concat(account))
+         if(data){          
+             this.records = JSON.parse(data)
+             console.log(data)
              this.error = undefined;
              this.dataNotFound = '';
              if(this.records == ''){
