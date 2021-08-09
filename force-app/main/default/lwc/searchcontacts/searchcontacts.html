@@ -21,9 +21,10 @@
                    </tr>
                </thead>
                <tbody>
-                   <template for:each={records} for:item="Id">
-                       <tr key={Id}>
-                           <td>{Id}</td>
+                   <template for:each={records} for:item="record">
+                       <tr key={record.Id}>
+                           <td>{record.Id}</td>
+                           <td>{record.Name}</td>
                        </tr>
                    </template>
                </tbody>
