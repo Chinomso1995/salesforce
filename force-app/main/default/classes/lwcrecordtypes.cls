@@ -44,3 +44,4 @@ public with sharing class lwcrecordtypes {
         public string recordUrl {get; set;}
     }
 }
+

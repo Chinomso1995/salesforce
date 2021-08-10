@@ -18,6 +18,8 @@
                        <th>Record Name</th>
                        <th>Record Type</th>
                        <th>Click to Open</th>
+                       <th>Counter</th>
+                       <th>Click to Update the Counter</th>
                    </tr>
                </thead>
                <tbody>
@@ -26,6 +28,8 @@
                            <td>{record.recordName}</td>
                            <td>{record.recordSobjectType}</td>
                            <td><a href={record.recordUrl} target="_blank">View</a></td>
+                           <td>{count}</td>
+                           <td><a onclick={handleIncrement}>Increment Counter</a></td>
                        </tr>
                    </template>
                </tbody>

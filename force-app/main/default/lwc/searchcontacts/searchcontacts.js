@@ -3,10 +3,17 @@ import retrieveContactData from '@salesforce/apex/lwcrecordtypes.retrieveContact
 
 export default class Searchcontacts extends LightningElement {
     @track currentRecordName;
+
+    count = 0
      handleChangeRecName(event){
        this.currentRecordName = event.target.value;      
      }
   
+    handleIncrement (){
+        this.count = count++
+    }
+
+
      @track records;
      @track dataNotFound;
      @wire (retrieveContactData,{keySearch:'$currentRecordName'})
