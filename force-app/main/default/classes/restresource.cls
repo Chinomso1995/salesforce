@@ -4,39 +4,28 @@ global with sharing class restresource {
 
     }
     @HttpPut
-    global static void updateRecords(List<Contact> Contacts) {
-        List<Id> insertedContactIds = new List<Id>();
-        for (Contact c : Contacts){
-            insertedContactIds.add(c.Id);
-        }
-        RestResponse res = RestContext.response;
-        if(Contacts != null){
-            List<Contact> orgContacts = [Select Id, FirstName, LastName from Contact];
-            if(orgContacts != null && orgContacts.size() > 0){
-                List<Id> orgContactIds = new List<Id>();
-                for(Contact c : orgContacts){
-                    orgContactIds.add(c.Id);
-                }
-                for (Contact insertedContact : Contacts){
-                    for (Contact orgContact : Contacts){
-                        if(insertedContact.id == orgContact.id){
-                            orgContact.FirstName = String.isBlank(insertedContact.FirstName) || insertedContact.FirstName == null ? orgContact.FirstName : insertedContact.FirstName;
-                            orgContact.LastName = String.isBlank(insertedContact.LastName) || insertedContact.LastName == null ? orgContact.LastName : insertedContact.LastName;
-                        }
-                    }
-                }
-                try {
-                    update orgContacts;
-                    res.statusCode = 200;
-                    res.responseBody = Blob.valueOf('Records updated successfully');
-                }
-                catch(Exception e){
-                        res.statusCode = 500;
-                        res.responseBody = Blob.valueOf('An Error Has occured While trying to update the records: ' + e.getMessage());
-                    }  
+    global static void updateContacts(List<Contact> updateContacts) {
+        RestResponse res = RestContext.Response;
+        List<Contact> contactsToUpdateInDb = new List<Contact>();
+        Map<Id, Contact> existingContacts = new Map<Id, Contact>([Select Id, FirstName, LastName from Contact]);
+        for (Contact cont : updateContacts){
+            if(existingContacts.containsKey(cont.id)){
+                Contact record = existingContacts.get(cont.id);
+                record.FirstName = !String.isBlank(cont.FirstName) ? cont.FirstName : record.FirstName;
+                record.LastName = !String.isBlank(cont.LastName) ? cont.LastName : record.LastName;
+                contactsToUpdateInDb.add(record);
             }
         }
-    }
+        try {
+            update contactsToUpdateInDb;
+            res.statusCode = 200;
+            res.responseBody = Blob.valueOf('Records updated successfully');
+        }
+        catch(Exception e){
+                res.statusCode = 500;
+                res.responseBody = Blob.valueOf('An Error Has occured While trying to update the records: ' + e.getMessage());
+            }  
+     }
 }
 
 
