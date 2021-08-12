@@ -1,0 +1,17 @@
+<apex:page lightningStylesheets="true">
+    <apex:includeLightning />
+    <div id="lightning" />
+
+    <script>
+        $Lightning.use("c:contacts", function () {
+            $Lightning.createComponent("c:Searchcontacts",
+                {},
+                "lightning",
+                function (cmp) {
+                    console.log("component was created");
+                    // do some stuff
+                }
+            );
+        });
+    </script>
+</apex:page>
